@@ -1,0 +1,219 @@
+# Generates an array of strings, each string represents a line from the file 'fileName'
+def fileToArray(fileName)
+    lines = Array.new
+    File.foreach(fileName).with_index { |line|
+        lines << line.chomp
+    }
+    return lines
+end
+
+def generateLetterGrid(width, height, acceptableLetters)
+
+    grid = Hash.new
+
+    # Iterate through each grid entry
+    for y in 0..height-1 do
+        for x in 0..width-1 do
+        
+            # Generate a random letter from the acceptable letters list
+            # and set it to the grid entry
+            grid[[x, y]] = acceptableLetters.sample
+           
+        end
+    end 
+
+    return grid
+    
+end
+
+# Prints the grid to the terminal
+def printLetterGrid(grid, width, height)
+
+    # Iterate through each grid entry
+    for y in 0..height-1 do
+
+        for x in 0..width-1 do
+
+            # Print the entry
+            print "|#{grid[[x, y]]}|"
+
+        end
+
+        # Insert a new row
+        puts
+
+    end
+
+end
+
+# If 'word' is a substring of any string in strings, returns true
+# Else, returns false
+def wordInStrings(word, strings)
+end
+
+# Returns an array of strings, each one representing a left-to-right row in the grid
+def leftToRight(grid, width, height)
+
+    strings = Array.new
+    string = String.new
+
+    for y in 0..height-1 do
+
+        string = ""
+
+        for x in 0..width-1 do
+            letter = grid[[x, y]]
+            string << letter
+        end
+
+        strings << string
+    end
+
+    return strings
+end
+
+# Returns an array of strings, each one representing a right-to-left row in the grid
+def rightToLeft(grid, width, height)
+
+    strings = leftToRight(grid, width, height)
+
+    for string in strings do
+        string.reverse!
+    end
+
+    return strings
+end
+
+# Returns an array of strings, each one representing a top-to-bottom column in the grid
+def topToBottom(grid, width, height)
+
+    strings = Array.new
+    string = String.new
+
+    for x in 0..width-1 do
+
+        string = ""
+
+        for y in 0..height-1 do
+            letter = grid[[x, y]]
+            string << letter
+        end
+
+        strings << string
+
+    end
+
+    return strings
+end
+
+# Returns an array of strings, each one representing a bottom-to-top column in the grid
+def bottomToTop(grid, width, height)
+
+    strings = topToBottom(grid, width, height)
+
+    for string in strings do
+        string.reverse!
+    end
+
+    return strings
+end
+
+# Returns an array of strings, each one representing a topLeft-to-bottomRight diagonal in the grid
+def topLeftToBottomRight(grid, width, height)
+    # TODO: IMPLEMENT THIS MORE ELEGANTLY
+
+    strings = Array.new
+    string = String.new
+
+    # Get the top-right half of the grid, including the longest diagonal
+    for x in 1..width do
+
+        string = ""
+
+        for y in 0..x-1 do
+
+            letter = grid[[width-x + y, y]]
+
+            string << letter
+
+        end
+
+        strings << string
+
+    end
+
+    # Get the bottom-left half of the grid, not including the longest diagonal
+    # TODO: find a more elegant way of doing this, without needing to reverse the string
+    for x in 0..width-2 do
+
+        string = ""
+
+        for y in 0..x do
+
+            letter = grid[[x-y, height - y - 1]]
+
+            string << letter
+
+        end
+
+        string.reverse!
+
+        strings << string
+
+    end
+
+    return strings
+
+end
+
+# Returns an array of strings, each one representing a bottomRight-to-topLeft diagonal in the grid
+def bottomRightToTopLeft(grid, width, height)
+
+    strings = topLeftToBottomRight(grid, width, height)
+
+    for string in strings do
+        string.reverse!
+    end
+
+    return strings
+
+end
+
+# Returns an array of strings, each one representing a topRight-to-bottomLeft diagonal in the grid
+def topRightToBottomLeft(grid, width, height)
+    # TODO: IMPLEMENT THIS
+
+    strings = Array.new
+    string = String.new
+
+    return strings
+end
+
+# Returns an array of strings, each one representing a bottomLeft-to-topRight diagonal in the grid
+def bottomLeftToTopRight(grid, width, height)
+
+    strings = topRightToBottomLeft(grid, width, height)
+
+    for string in strings do
+        string.reverse!
+    end
+
+    return strings
+
+end
+
+print "Width of grid: "
+width = gets.chomp.to_i
+
+print "Height of grid: "
+height = gets.chomp.to_i
+
+grid = generateLetterGrid(width, height, fileToArray('acceptable_letters.txt'))
+printLetterGrid(grid, width, height)
+
+
+#print "Word to find: "
+#word = gets.chomp.to_s
+
+strings = leftToRight(grid, width, height)
+print strings

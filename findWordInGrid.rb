@@ -7,6 +7,8 @@ def fileToArray(fileName)
     return lines
 end
 
+# Generates a width-x-height grid where each [x,y] grid item
+# is a random character contained in 'acceptableLetters'
 def generateLetterGrid(width, height, acceptableLetters)
 
     grid = Hash.new
@@ -49,83 +51,15 @@ end
 # conditionsToCheck is a hash table with 'check[NameOfCondition]' as key and true/false as value
 def wordInGrid(grid, width, height, word, conditionsToCheck)
 
-    if (conditionsToCheck["checkLeftToRight"])
-        if wordInStrings(word, leftToRight(grid, width, height))
+    conditionsToCheck.each do |conditionName, conditionResult|
+        if wordInStrings(word, eval("#{conditionName}(grid, width, height)"))
             return true
         end
     end
-
-    if (conditionsToCheck["checkRightToLeft"])
-        if wordInStrings(word, rightToLeft(grid, width, height))
-            return true
-        end
-    end
-
-    if (conditionsToCheck["checkTopToBottom"])
-        if wordInStrings(word, topToBottom(grid, width, height))
-            return true
-        end
-    end
-
-    if (conditionsToCheck["checkBottomToTop"])
-        if wordInStrings(word, bottomToTop(grid, width, height))
-            return true
-        end
-    end
-
-    if (conditionsToCheck["checkLeftToRightWraparound"])
-        if wordInStrings(word, leftToRightWraparound(grid, width, height))
-            return true
-        end
-    end
-
-    if (conditionsToCheck["checkRightToLeftWraparound"])
-        if wordInStrings(word, rightToLeftWraparound(grid, width, height))
-            return true
-        end
-    end
-
-    if (conditionsToCheck["checkTopToBottomWraparound"])
-        if wordInStrings(word, topToBottomWraparound(grid, width, height))
-            return true
-        end
-    end
-
-    if (conditionsToCheck["checkBottomToTopWraparound"])
-        if wordInStrings(word, bottomToTopWraparound(grid, width, height))
-            return true
-        end
-    end
-
-    if (conditionsToCheck["checkTopLeftToBottomRight"])
-        if wordInStrings(word, topLeftToBottomRight(grid, width, height))
-            return true
-        end
-    end
-
-    if (conditionsToCheck["checkBottomRightToTopLeft"])
-        if wordInStrings(word, bottomRightToTopLeft(grid, width, height))
-            return true
-        end
-    end
-
-    if (conditionsToCheck["checkTopRightToBottomLeft"])
-        if wordInStrings(word, topRightToBottomLeft(grid, width, height))
-            return true
-        end
-    end
-
-    if (conditionsToCheck["checkBottomLeftToTopRight"])
-        if wordInStrings(word, bottomLeftToTopRight(grid, width, height))
-            return true
-        end
-    end
-
 
     # If the function has made it this far, then the word was
     # not found in the grid using any of the selected rules
     return false
-
 end
 
 # If 'word' is a substring of any string in strings, returns true
@@ -396,20 +330,20 @@ grid = generateLetterGrid(width, height, fileToArray('acceptable_letters.txt'))
 printLetterGrid(grid, width, height)
 
 rules = Hash.new
-rules["checkLeftToRight"] = true
-rules["checkRightToLeft"] = true
-rules["checkTopToBottom"] = true
-rules["checkBottomToTop"] = true
+rules["leftToRight"] = true
+rules["rightToLeft"] = true
+rules["topToBottom"] = true
+rules["bottomToTop"] = true
 
-rules["checkLeftToRightWraparound"] = true
-rules["checkRightToLeftWraparound"] = true
-rules["checkTopToBottomWraparound"] = true
-rules["checkBottomToTopWraparound"] = true
+rules["leftToRightWraparound"] = true
+rules["rightToLeftWraparound"] = true
+rules["topToBottomWraparound"] = true
+rules["bottomToTopWraparound"] = true
 
-rules["checkTopLeftToBottomRight"] = true
-rules["checkBottomRightToTopLeft"] = true
-rules["checkTopRightToBottomLeft"] = true
-rules["checkBottomLeftToTopRight"] = true
+rules["topLeftToBottomRight"] = true
+rules["bottomRightToTopLeft"] = true
+rules["topRightToBottomLeft"] = true
+rules["bottomLeftToTopRight"] = true
 
 puts "\nTo exit, press ctrl-c\n\n"
 

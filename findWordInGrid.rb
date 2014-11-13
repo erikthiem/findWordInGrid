@@ -2,15 +2,6 @@ require_relative 'file_operations'
 require_relative 'grid'
 require_relative 'generateStringArrays'
 
-# Generates an array of strings, each string represents a line from the file 'fileName'
-def fileToArray(fileName)
-    lines = Array.new
-    File.foreach(fileName).with_index { |line|
-        lines << line.chomp
-    }
-    return lines
-end
-
 # Returns true if any word checking conditions are met. Returns false if none are met
 # conditionsToCheck is a hash table with 'check[NameOfCondition]' as key and true/false as value
 def wordInGrid(grid, width, height, word, conditionsToCheck)

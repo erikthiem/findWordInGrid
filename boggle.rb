@@ -97,6 +97,31 @@ def wordInGrid(grid, width, height, word, conditionsToCheck)
         end
     end
 
+    if (conditionsToCheck["checkTopLeftToBottomRight"])
+        if wordInStrings(word, leftToRight(grid, width, height))
+            return true
+        end
+    end
+
+    if (conditionsToCheck["checkBottomRightToTopLeft"])
+        if wordInStrings(word, leftToRight(grid, width, height))
+            return true
+        end
+    end
+
+    if (conditionsToCheck["checkTopRightToBottomLeft"])
+        if wordInStrings(word, leftToRight(grid, width, height))
+            return true
+        end
+    end
+
+    if (conditionsToCheck["checkBottomLeftToTopRight"])
+        if wordInStrings(word, leftToRight(grid, width, height))
+            return true
+        end
+    end
+
+
 
     # If the function has made it this far, then the word was
     # not found in the grid using any of the selected rules
@@ -245,6 +270,7 @@ def bottomRightToTopLeft(grid, width, height)
 
 end
 
+# TODO: Implement this function more elegantly
 # Returns an array of strings, each one representing a topRight-to-bottomLeft diagonal in the grid
 def topRightToBottomLeft(grid, width, height)
 
@@ -268,19 +294,21 @@ def topRightToBottomLeft(grid, width, height)
 
     end
 
-    # TODO: Get the bottom-right half of the grid, not including the longest diagonal
-
+    # Get the bottom-right half of the grid, not including the longest diagonal
+    # TODO: find a better way of doing this, without needing to reverse the string
     for x in 0..width-2 do
 
         string = ""
 
         for y in 0..x do
 
-            letter = grid[[x-y, height - y - 1]]
+            letter = grid[[width - x + y - 1, height - y - 1]]
 
             string << letter
 
         end
+
+        string.reverse!
 
         strings << string
     end
@@ -310,5 +338,3 @@ printLetterGrid(grid, width, height)
 #print "Word to find: "
 #word = gets.chomp.to_s
 
-strings = topRightToBottomLeft(grid, width, height)
-print strings

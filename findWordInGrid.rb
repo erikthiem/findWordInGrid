@@ -52,8 +52,10 @@ end
 def wordInGrid(grid, width, height, word, conditionsToCheck)
 
     conditionsToCheck.each do |conditionName, conditionResult|
-        if wordInStrings(word, eval("#{conditionName}(grid, width, height)"))
-            return true
+        if (conditionResult)
+            if wordInStrings(word, eval("#{conditionName}(grid, width, height)"))
+                return true
+            end
         end
     end
 

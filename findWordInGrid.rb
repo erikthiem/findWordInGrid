@@ -1,3 +1,4 @@
+require_relative 'file_operations'
 require_relative 'grid'
 require_relative 'generateStringArrays'
 

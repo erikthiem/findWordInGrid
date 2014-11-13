@@ -35,20 +35,86 @@ def printLetterGrid(grid, width, height)
         for x in 0..width-1 do
 
             # Print the entry
-            print "|#{grid[[x, y]]}|"
+            print "|#{grid[[x, y]]}"
 
         end
 
-        # Insert a new row
-        puts
+        print "|\n"
 
     end
+
+end
+
+# Returns true if any word checking conditions are met. Returns false if none are met
+# conditionsToCheck is a hash table with 'check[NameOfCondition]' as key and true/false as value
+def wordInGrid(grid, width, height, word, conditionsToCheck)
+
+    if (conditionsToCheck["checkLeftToRight"])
+        if wordInStrings(word, leftToRight(grid, width, height))
+            return true
+        end
+    end
+
+    if (conditionsToCheck["checkRightToLeft"])
+        if wordInStrings(word, leftToRight(grid, width, height))
+            return true
+        end
+    end
+
+    if (conditionsToCheck["checkTopToBottom"])
+        if wordInStrings(word, leftToRight(grid, width, height))
+            return true
+        end
+    end
+
+    if (conditionsToCheck["checkBottomToTop"])
+        if wordInStrings(word, leftToRight(grid, width, height))
+            return true
+        end
+    end
+
+    if (conditionsToCheck["checkLeftToRightWraparound"])
+        if wordInStrings(word, leftToRight(grid, width, height))
+            return true
+        end
+    end
+
+    if (conditionsToCheck["checkRightToLeftWraparound"])
+        if wordInStrings(word, leftToRight(grid, width, height))
+            return true
+        end
+    end
+
+    if (conditionsToCheck["checkTopToBottomWraparound"])
+        if wordInStrings(word, leftToRight(grid, width, height))
+            return true
+        end
+    end
+
+    if (conditionsToCheck["checkBottomToTopWraparound"])
+        if wordInStrings(word, leftToRight(grid, width, height))
+            return true
+        end
+    end
+
+
+    # If the function has made it this far, then the word was
+    # not found in the grid using any of the selected rules
+    return false
 
 end
 
 # If 'word' is a substring of any string in strings, returns true
 # Else, returns false
 def wordInStrings(word, strings)
+    for string in strings do
+
+        if string.include? word
+            return true
+        end
+    end
+
+    return false
 end
 
 # Returns an array of strings, each one representing a left-to-right row in the grid
@@ -118,9 +184,9 @@ def bottomToTop(grid, width, height)
     return strings
 end
 
+# TODO: Implement this function more elegantly
 # Returns an array of strings, each one representing a topLeft-to-bottomRight diagonal in the grid
 def topLeftToBottomRight(grid, width, height)
-    # TODO: IMPLEMENT THIS MORE ELEGANTLY
 
     strings = Array.new
     string = String.new
@@ -143,7 +209,7 @@ def topLeftToBottomRight(grid, width, height)
     end
 
     # Get the bottom-left half of the grid, not including the longest diagonal
-    # TODO: find a more elegant way of doing this, without needing to reverse the string
+    # TODO: find a better way of doing this, without needing to reverse the string
     for x in 0..width-2 do
 
         string = ""
@@ -181,10 +247,43 @@ end
 
 # Returns an array of strings, each one representing a topRight-to-bottomLeft diagonal in the grid
 def topRightToBottomLeft(grid, width, height)
-    # TODO: IMPLEMENT THIS
 
     strings = Array.new
     string = String.new
+
+    # Get the top-left half of the grid, including the longest diagonal
+    for x in 0..width-1 do
+
+        string = ""
+
+        for y in 0..x do
+
+            letter = grid[[x - y, y]]
+
+            string << letter
+
+        end
+
+        strings << string
+
+    end
+
+    # TODO: Get the bottom-right half of the grid, not including the longest diagonal
+
+    for x in 0..width-2 do
+
+        string = ""
+
+        for y in 0..x do
+
+            letter = grid[[x-y, height - y - 1]]
+
+            string << letter
+
+        end
+
+        strings << string
+    end
 
     return strings
 end
@@ -202,18 +301,14 @@ def bottomLeftToTopRight(grid, width, height)
 
 end
 
-print "Width of grid: "
-width = gets.chomp.to_i
-
-print "Height of grid: "
-height = gets.chomp.to_i
+width = 10
+height = 10
 
 grid = generateLetterGrid(width, height, fileToArray('acceptable_letters.txt'))
 printLetterGrid(grid, width, height)
 
-
 #print "Word to find: "
 #word = gets.chomp.to_s
 
-strings = leftToRight(grid, width, height)
+strings = topRightToBottomLeft(grid, width, height)
 print strings

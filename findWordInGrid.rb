@@ -206,6 +206,67 @@ def bottomToTop(grid, width, height)
     end
 
     return strings
+
+end
+
+# Returns an array of strings, each one representing a left-to-right row in the grid, with wraparound
+def leftToRightWraparound(grid, width, height)
+
+    strings = leftToRight(grid, width, height)
+
+    for string in strings do
+
+        string << string
+
+    end
+
+    return strings
+
+end
+
+# Returns an array of strings, each one representing a right-to-left row in the grid, with wraparound
+def rightToLeftWraparound(grid, width, height)
+
+    strings = rightToLeft(grid, width, height)
+
+    for string in strings do
+
+        string << string
+
+    end
+
+    return strings
+
+end
+
+# Returns an array of strings, each one representing a top-to-bottom column in the grid, with wraparound
+def topToBottomWraparound(grid, width, height)
+
+    strings = topToBottom(grid, width, height)
+
+    for string in strings do
+
+        string << string
+
+    end
+
+    return strings
+
+end
+
+# Returns an array of strings, each one representing a bottom-to-top column in the grid, with wraparound
+def bottomToTopWraparound(grid, width, height)
+
+    strings = bottomToTop(grid, width, height)
+
+    for string in strings do
+
+        string << string
+
+    end
+
+    return strings
+
 end
 
 # TODO: Implement this function more elegantly
@@ -339,6 +400,18 @@ rules["checkLeftToRight"] = true
 rules["checkRightToLeft"] = true
 rules["checkTopToBottom"] = true
 rules["checkBottomToTop"] = true
+
+rules["checkLeftToRightWraparound"] = true
+rules["checkRightToLeftWraparound"] = true
+rules["checkTopToBottomWraparound"] = true
+rules["checkBottomToTopWraparound"] = true
+
+rules["checkTopLeftToBottomRight"] = true
+rules["checkBottomRightToTopLeft"] = true
+rules["checkTopRightToBottomLeft"] = true
+rules["checkBottomLeftToTopRight"] = true
+
+puts "\nTo exit, press ctrl-c\n\n"
 
 while (true) do
 

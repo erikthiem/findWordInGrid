@@ -56,71 +56,70 @@ def wordInGrid(grid, width, height, word, conditionsToCheck)
     end
 
     if (conditionsToCheck["checkRightToLeft"])
-        if wordInStrings(word, leftToRight(grid, width, height))
+        if wordInStrings(word, rightToLeft(grid, width, height))
             return true
         end
     end
 
     if (conditionsToCheck["checkTopToBottom"])
-        if wordInStrings(word, leftToRight(grid, width, height))
+        if wordInStrings(word, topToBottom(grid, width, height))
             return true
         end
     end
 
     if (conditionsToCheck["checkBottomToTop"])
-        if wordInStrings(word, leftToRight(grid, width, height))
+        if wordInStrings(word, bottomToTop(grid, width, height))
             return true
         end
     end
 
     if (conditionsToCheck["checkLeftToRightWraparound"])
-        if wordInStrings(word, leftToRight(grid, width, height))
+        if wordInStrings(word, leftToRightWraparound(grid, width, height))
             return true
         end
     end
 
     if (conditionsToCheck["checkRightToLeftWraparound"])
-        if wordInStrings(word, leftToRight(grid, width, height))
+        if wordInStrings(word, rightToLeftWraparound(grid, width, height))
             return true
         end
     end
 
     if (conditionsToCheck["checkTopToBottomWraparound"])
-        if wordInStrings(word, leftToRight(grid, width, height))
+        if wordInStrings(word, topToBottomWraparound(grid, width, height))
             return true
         end
     end
 
     if (conditionsToCheck["checkBottomToTopWraparound"])
-        if wordInStrings(word, leftToRight(grid, width, height))
+        if wordInStrings(word, bottomToTopWraparound(grid, width, height))
             return true
         end
     end
 
     if (conditionsToCheck["checkTopLeftToBottomRight"])
-        if wordInStrings(word, leftToRight(grid, width, height))
+        if wordInStrings(word, topLeftToBottomRight(grid, width, height))
             return true
         end
     end
 
     if (conditionsToCheck["checkBottomRightToTopLeft"])
-        if wordInStrings(word, leftToRight(grid, width, height))
+        if wordInStrings(word, bottomRightToTopLeft(grid, width, height))
             return true
         end
     end
 
     if (conditionsToCheck["checkTopRightToBottomLeft"])
-        if wordInStrings(word, leftToRight(grid, width, height))
+        if wordInStrings(word, topRightToBottomLeft(grid, width, height))
             return true
         end
     end
 
     if (conditionsToCheck["checkBottomLeftToTopRight"])
-        if wordInStrings(word, leftToRight(grid, width, height))
+        if wordInStrings(word, bottomLeftToTopRight(grid, width, height))
             return true
         end
     end
-
 
 
     # If the function has made it this far, then the word was
@@ -335,6 +334,21 @@ height = 10
 grid = generateLetterGrid(width, height, fileToArray('acceptable_letters.txt'))
 printLetterGrid(grid, width, height)
 
-#print "Word to find: "
-#word = gets.chomp.to_s
+rules = Hash.new
+rules["checkLeftToRight"] = true
+rules["checkRightToLeft"] = true
+rules["checkTopToBottom"] = true
+rules["checkBottomToTop"] = true
 
+while (true) do
+
+    print "Word to find: "
+    word = gets.chomp.to_s
+
+    if (wordInGrid(grid, width, height, word, rules))
+        puts "YES!"
+    else
+        puts "NO!"
+    end
+
+end

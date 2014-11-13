@@ -35,7 +35,7 @@ end
 width = 10
 height = 10
 
-grid = generateLetterGrid(width, height, fileToArray('acceptable_letters.txt'))
+grid = generateLetterGrid(width, height, fileToArray('data/acceptable_letters.txt'))
 printLetterGrid(grid, width, height)
 
 rules = Hash.new

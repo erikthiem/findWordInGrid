@@ -1,0 +1,9 @@
+Things to do:
+
+* Implement wraparounds
+* Find a better way to get the diagonals
+* Find a way to get diagonals to work on non-square grids
+* Create a web backend using Sinatra
+* Create an ajax web frontend, probably using Bootstrap 
+* Add in option to use included dictionary file to find all english words in grid
+* (Once web interface is made) highlight letters that are part of desired word if word is found
